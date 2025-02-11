@@ -1,66 +1,101 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Introduction
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+We've built a basic recipes app with Laravel 11 that consists of a single-page frontend and an JSON API. Within this codebase, some misguided coding choices have been made, and some backend logic has not been implemented yet. We'd like you to find and fix these mistakes, and add the missing backend code.
 
-## About Laravel
+To that end - please complete the numbered tasks below. The ones we care about more are closer to the top. These tasks are designed to point you in the right direction to find the hidden issues. Correctly identifying these issues and applying the correct fix is at the heart of this challenge.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Some tasks can be solved with one line, while some require larger code chunks to be added. If something in the existing code doesn't look quite right, please improve it! There isn't necessarily a single right answer for these tasks - feel free to make executive decisions as needed. The goal is for this to feel similar to working in a real project.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+We expect this project to take 1-2 hours.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+# What we are looking for
 
-## Learning Laravel
+Primarily, we are looking for organized, readable code and thoughtfulness in the choices you make while coding. Specifically, we're interested in the following:
+- Ability to take initiative when you see something that can be improved
+- Simple solutions over those that are complex, abstracted, and extensible
+- Consistent code style
+- Clear code comments if needed
+- Small commits with high-quality commit messages (they don't need to be super detailed, but they should be clear, descriptive, and in the imperative mood)
+- Evidence that you have thought about deeper considerations such as edge cases, security, etc.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Please do not use [Laravel resource controllers](https://laravel.com/docs/11.x/controllers#resource-controllers). We prefer to list route methods and controller functions explicitly.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+# Getting set up
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+This application uses Laravel Sail to run a Docker container with everything the application needs. You will need the following installed on your computer:
+- [Docker Desktop](https://www.docker.com/products/docker-desktop/) to run the container
+- PHP 8.2 and [Composer](https://getcomposer.org/) to initially install the dependencies
 
-## Laravel Sponsors
+More information on setting up Laravel Sail is in the [Laravel docs](https://laravel.com/docs/11.x/installation#docker-installation-using-sail).
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+If you're using Windows, we recommend running the following commands on [Ubuntu on WSL](https://documentation.ubuntu.com/wsl/en/latest/howto/install-ubuntu-wsl2/).
 
-### Premium Partners
+```sh
+# Clone the repository
+git clone https://github.com/timetopet/ttp-recipes.git
+cd ttp-recipes
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+# Install dependencies
+composer update
 
-## Contributing
+# Run the application
+./vendor/bin/sail up
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+# While the application is running, open another terminal and initialize the database
+./vendor/bin/sail artisan migrate
+./vendor/bin/sail artisan db:seed
+```
 
-## Code of Conduct
+# File list
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+These are the current main application files, to save you some time:
 
-## Security Vulnerabilities
+```
+app/Http/Controllers/RecipeController.php
+app/Models/Ingredient.php
+app/Models/Recipe.php
+public/app.css
+public/app.js
+resources/views/home.blade.php
+routes/api.php
+routes/web.php
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+# Tasks
 
-## License
+Some of these are written the way we would receive them from a non-technical stakeholder. Keep in mind that there are hidden technical issues behind each of these!
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+1. If you save a new recipe with the name "Mac & Cheese", the name in the list is just "Mac". This isn't right.
+
+2. When you try to save a new recipe that's blank, it just says "Error adding recipe!". That's not a very helpful error message.
+
+3. When you edit an existing recipe and click Save, it looks like it takes effect, but when you reload the page, those edits are gone.
+
+4. In the `RecipeController` class, the JSON structure that represents a recipe is essentially duplicated. Let's avoid having duplicated code here.
+
+5. The efficiency of the API endpoint that loads recipes on pageload can be improved from a SQL query standpoint.
+
+6. When you save a new recipe, it appears at the top of the list. However, when you reload the page, it's at the bottom. It should still be at the top after reloading.
+
+7. When you save a new recipe, the values are still in the form fields after it's successfully saved - these should be cleared out.
+
+8. If you add a new recipe and double click on the Save button, it adds the recipe twice.
+
+9. There is a frontend vulnerability that would allow a bad actor to run arbitrary code when other people view the recipes. Let's fix this.
+
+# Submitting
+
+Please add your commits, push the repository to your own GitHub account, and share the repository with the following users:
+
+- clabinger
+- jeankayy
+- joshuahedlund
+
+```sh
+# Remove the remote repository (you won't be pushing up to our repository)
+git remote remove origin
+
+# Create a new repository in your GitHub account, then push up to that repository
+git remote add origin <your-repository-url>
+git push -u origin main
+```
