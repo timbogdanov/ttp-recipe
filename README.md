@@ -90,6 +90,7 @@ Please add your commits, push the repository to your own GitHub account, and sha
 - clabinger
 - jeankayy
 - joshuahedlund
+- pegler
 
 ```sh
 # Remove the remote repository (you won't be pushing up to our repository)
