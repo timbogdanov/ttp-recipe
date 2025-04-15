@@ -23,9 +23,9 @@ class RecipeRequest extends FormRequest
     {
         return [
             'name'          => 'required|string|min:3|max:255',
-            'description'   => 'nullable|string|min:3',
-            'ingredients'   => 'required|array|min:1',
-            'ingredients.*' => 'required|string|max:255',
+            'description'   => 'required|string|min:3',
+            'ingredients'   => 'nullable|array',
+            'ingredients.*' => 'nullable|string',
         ];
     }
 }
