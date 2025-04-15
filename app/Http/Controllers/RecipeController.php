@@ -32,15 +32,33 @@ class RecipeController extends Controller
     //----- but can become useful if the class grows in functionality.
     public function store(RecipeRequest $request): JsonResponse
     {
+        $validated = $request->validated();
+
+        DB::beginTransaction();
         try {
-            $recipe = $this->recipeService->create($request->validated());
+            //----- using db transactions here because im working with manipulating relationships
+            $recipe = Recipe::create([
+                'name'        => $validated['name'],
+                'description' => $validated['description'],
+            ]);
+
+            $recipe->ingredients()->createMany(
+                array_map(fn($name) => ['name' => $name], $validated['ingredients'])
+            );
+
+            //----- commit if successful
+            DB::commit();
+
             return response()->json([
                 'message' => 'Recipe created successfully.',
-                'recipe'  => $recipe,
-            ], 201);
+                'recipe'  => $recipe->load('ingredients'),
+            ]);
         } catch (Exception $e) {
+            //----- rolling back if failed
+            DB::rollBack();
+
             return response()->json([
-                'message' => 'Failed to create recipe.',
+                'message' => 'Failed to update recipe.',
                 'error'   => $e->getMessage(),
             ], 500);
         }
@@ -49,11 +67,24 @@ class RecipeController extends Controller
     //----- added an update function to handle the edit requests
     public function update(RecipeRequest $request, Recipe $recipe): JsonResponse
     {
+        $validated = $request->validated();
+
         try {
-            $recipe = $this->recipeService->update($recipe, $request->validated());
+            DB::transaction(function () use ($validated, $recipe) {
+                $recipe->update([
+                    'name'        => $validated['name'],
+                    'description' => $validated['description'],
+                ]);
+
+                $recipe->ingredients()->delete();
+                $recipe->ingredients()->createMany(
+                    array_map(fn($name) => ['name' => $name], $validated['ingredients'])
+                );
+            });
+
             return response()->json([
                 'message' => 'Recipe updated successfully.',
-                'recipe'  => $recipe,
+                'recipe'  => $recipe->load('ingredients'),
             ]);
         } catch (Exception $e) {
             return response()->json([
