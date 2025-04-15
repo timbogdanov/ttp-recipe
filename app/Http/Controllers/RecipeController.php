@@ -63,6 +63,7 @@ class RecipeController extends Controller
         }
     }
 
+    //----- added delete to handle delete requests
     public function destroy(Recipe $recipe): JsonResponse
     {
         DB::beginTransaction();
