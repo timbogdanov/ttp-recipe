@@ -4,20 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\RecipeRequest;
 use App\Models\Recipe;
-use App\Services\RecipeService;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 
 class RecipeController extends Controller
 {
-    protected RecipeService $recipeService;
-
-    public function __construct(RecipeService $recipeService)
-    {
-        $this->recipeService = $recipeService;
-    }
-
     public function index(): JsonResponse
     {
         //----- use 'with' to eager load, preventing n+1 query issues
